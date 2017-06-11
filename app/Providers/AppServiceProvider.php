@@ -16,6 +16,9 @@ class AppServiceProvider extends ServiceProvider
         \View::composer('*', function ($view) {
             $view->with('channels', \App\Channel::all() );
         });
+
+        //for old mysql
+        \Schema::defaultStringLength(191);
     }
 
     /**

@@ -21,11 +21,15 @@ class ThreadsController extends Controller
      * Display a listing of the resource.
      * @param Channel $channel
      * @param ThreadFilters $filters
-     * @return View
+     * @return mixed
      */
-    public function index(Channel $channel, ThreadFilters $filters) : View
+    public function index(Channel $channel, ThreadFilters $filters)
     {
         $threads = $this->getThreads($channel, $filters);
+
+        if (request()->wantsJson()) {
+            return $threads;
+        }
 
         return view('threads.index', compact('threads'));
     }
@@ -74,7 +78,9 @@ class ThreadsController extends Controller
      */
     public function show($channelId, Thread $thread)
     {
-        return view('threads.show', compact('channelId', 'thread'));
+        $replies = $thread->replies()->paginate(20);
+
+        return view('threads.show', compact('channelId', 'thread', 'replies'));
     }
 
     /**

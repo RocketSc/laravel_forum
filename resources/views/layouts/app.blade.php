@@ -12,6 +12,17 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        body {
+            padding-bottom: 100px;
+        }
+
+        .level {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
@@ -40,6 +51,7 @@
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Browse <span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a href="{{ route('allThreads') }}">All threads</a></li>
+                                <li><a href="{{ route('allThreads') }}?popular=1">Popular threads</a></li>
                                 @if(auth()->check())
                                     <li><a href="/threads?by={{ auth()->user()->name}}">My Threads</a></li>
                                 @endif
