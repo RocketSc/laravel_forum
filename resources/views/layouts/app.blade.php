@@ -18,6 +18,8 @@
         }
 
         .level {
+            padding-top: 10px;
+            padding-right: 15px;
             display: flex;
             align-items: center;
             justify-content: space-between;
