@@ -6,7 +6,8 @@
             <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a href="#">{{$thread->title}}</a> by {{ $thread->creator->name }}
+                        <a href="#">{{$thread->title}}</a> by
+                        <a href="{{ route('user_profile', $thread->creator) }}">{{ $thread->creator->name }}</a>
                     </div>
                     <div class="panel-body">
                         {{$thread->body}}

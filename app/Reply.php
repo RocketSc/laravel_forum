@@ -6,7 +6,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reply extends Model
 {
+    use Favoritable;
+
     protected $guarded = [];
+
+    protected $with = ['owner', 'favorites'];
 
     public function thread()
     {
@@ -18,20 +22,4 @@ class Reply extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function favorites()
-    {
-        return $this->morphMany(Favorite::class, 'favored');
-    }
-
-    public function favorite($userId)
-    {
-        if (! $this->favorites()->where(['user_id' => $userId])->exists() ) {
-            return $this->favorites()->create(['user_id' => $userId]);
-        }
-    }
-
-    public function isFavored()
-    {
-        return $this->favorites()->where('user_id', auth()->id())->exists();
-    }
 }
