@@ -6,8 +6,23 @@
             <div class="col-md-8">
                 <div class="panel panel-default">
                     <div class="panel-heading">
-                        <a href="#">{{$thread->title}}</a> by
-                        <a href="{{ route('user_profile', $thread->creator) }}">{{ $thread->creator->name }}</a>
+                        <div class="level">
+                            <span>
+                                <a href="#">{{$thread->title}}</a> by
+                                <a href="{{ route('user_profile', $thread->creator) }}">{{ $thread->creator->name }}</a>
+                            </span>
+
+                            @can('update', $thread)
+                                <form action="{{ $thread->path() }}" method="POST">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
+
+                                    <button type="submit" class="btn btn-link">Delete thread</button>
+
+
+                                </form>
+                            @endcan
+                        </div>
                     </div>
                     <div class="panel-body">
                         {{$thread->body}}
@@ -36,7 +51,8 @@
                         </div>
                     </form>
                 @else
-                    <p class="text-center">please <a href="{{ route('login') }}">sign in</a> to participate in this discussion</p>
+                    <p class="text-center">please <a href="{{ route('login') }}">sign in</a> to participate in this
+                        discussion</p>
                 @endif
             </div>
 
@@ -46,7 +62,9 @@
                         Meta
                     </div>
                     <div class="panel-body">
-                        This thread was published {{ $thread->created_at->DiffForHumans() }} by <a href="#">{{ $thread->creator->name }}</a> and currently has {{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}
+                        This thread was published {{ $thread->created_at->DiffForHumans() }} by <a
+                                href="#">{{ $thread->creator->name }}</a> and currently
+                        has {{ $thread->replies_count }} {{ str_plural('reply', $thread->replies_count) }}
                     </div>
                 </div>
 
